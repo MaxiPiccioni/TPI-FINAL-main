@@ -31,10 +31,10 @@ export default function ProveedoresListado({
                 <td>{Item.nombre_empresa}</td>
                 <td>{Item.nombre_proveedor}</td>
                 <td className="text-end">{Item.telefono}</td>
-                <td className="text-end">
+                <td className="text-center">
                   {moment(Item.fecha_registro).format("DD/MM/YYYY")}
                 </td>
-                <td>{Item.Activo = "SI"}</td>
+                <td className="text-center">{Item.Activo = "SI"}</td>
                 <td className="text-center text-nowrap">
                   <button
                     className="btn btn-sm btn-outline-primary"

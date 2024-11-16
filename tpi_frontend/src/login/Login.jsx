@@ -32,10 +32,10 @@ function Login() {
           <form className="p-5">
             <img
               className="mb-4"
-              src="https://getbootstrap.com/docs/5.2/assets/brand/bootstrap-logo.svg"
+              src="/public/unnamed.png"              
               alt=""
-              width="72"
-              height="57"
+              width="322"
+              height="257"
             />
             <h1 className="h3 mb-3 fw-normal">Por favor ingrese</h1>
 

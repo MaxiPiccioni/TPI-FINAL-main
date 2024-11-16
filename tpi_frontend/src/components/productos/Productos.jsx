@@ -6,6 +6,7 @@ import ProductosBuscar from "./ProductosBuscar";
 import ProductosListado from "./ProductosListado";
 import ProductosRegistro from "./ProductosRegistro";
 
+
 function Productos() {
   const TituloAccionABMC = {
     A: "(Agregar)",

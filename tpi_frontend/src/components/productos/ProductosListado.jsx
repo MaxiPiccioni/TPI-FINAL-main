@@ -33,8 +33,8 @@ export default function ProductosListado({
                 <td className="text-end">
                   {moment(Item.fecha_elaboracion).format("DD/MM/YYYY")}
                 </td>
-                <td>{Item.id_proveedor}</td>
-                <td>{Item.Activo ="SI"}</td>
+                <td className="text-center">{Item.id_proveedor}</td>
+                <td className="text-center">{Item.Activo ="SI"}</td>
                 <td className="text-center text-nowrap">
                   <button
                     className="btn btn-sm btn-outline-primary"
