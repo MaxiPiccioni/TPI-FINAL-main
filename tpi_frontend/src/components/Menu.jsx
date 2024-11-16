@@ -55,6 +55,16 @@ function Menu() {
             </NavLink>
           </li>
           <li className="nav-item">
+            <NavLink className="nav-link" to="/locales">
+              Locales
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/empleados">
+              Empleados
+            </NavLink>
+          </li>
+          <li className="nav-item">
             <NavLink className="nav-link" title="Exclusivo para administradores" to="/productosjwt">
               Productos JWT
             </NavLink>

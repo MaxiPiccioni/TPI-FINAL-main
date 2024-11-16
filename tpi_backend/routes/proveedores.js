@@ -13,7 +13,7 @@ router.get("/api/proveedores", async function (req, res, next) {
   
       if (nombre) {
         whereCondition = {
-          nombre_proveedor: {
+          nombre_empresa: {
             [Op.like]: `%${nombre}%`,
           },
         };

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../seguridad/auth");
+const { Op } = require("sequelize");
 
 
 const db = require("../base-orm/sequelize-init");
@@ -8,30 +9,43 @@ const db = require("../base-orm/sequelize-init");
 // GET para todos los locales
 router.get("/api/locales", async function (req, res, next) {
   try {
+    const { nombre } = req.query;
+
+    let whereCondition = {};
+
+    if (nombre) {
+      whereCondition = {
+        nombre_loc: {
+          [Op.like]: `%${nombre}%`,
+        },
+      };
+    }
+
     let data = await db.Locales.findAll({
+      where: whereCondition,
       attributes: ["id_local", "nombre_loc", "direccion", "telefono", "fecha_apertura", "id_empleado"],
     });
     res.json(data);
   } catch (error) {
-    next(error); 
+    next(error);
   }
 });
 
-// GET para locales filtrados por nombre
-router.get('/api/locales/:nombre', async function (req, res) {
+
+// GET para los productos filtrados por id
+router.get("/api/locales/:id", async function (req, res) {
   try {
-    const local = await db.Locales.findOne({
-      where: { nombre_loc: req.params.nombre },
-    });
+    const local = await db.Locales.findByPk(req.params.id);
     if (local) {
       res.json(local);
     } else {
-      res.status(404).json({ message: 'Local no encontrado' });
+      res.status(404).json({ message: "Local no encontrado" });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Error en la consulta', error });
+    res.status(500).json({ message: "Error en la consulta", error });
   }
 });
+
 
 // POST para crear un nuevo local con validación de dirección única
 router.post('/api/locales/', async (req, res) => {
@@ -51,6 +65,7 @@ router.post('/api/locales/', async (req, res) => {
     res.status(500).json({ message: 'Error al crear el local', error });
   }
 });
+
 
 // PUT para modificar un local con validación de dirección única
 router.put('/api/locales/:id', async (req, res) => {
@@ -87,6 +102,7 @@ router.put('/api/locales/:id', async (req, res) => {
     res.status(500).json({ message: 'Error al actualizar el local', error });
   }
 });
+
 
 // DELETE para eliminar un local
 router.delete('/api/locales/:id', async (req, res) => {

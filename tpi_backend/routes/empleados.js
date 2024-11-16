@@ -1,36 +1,49 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../seguridad/auth");
-
-
 const db = require("../base-orm/sequelize-init");
+const { Op } = require("sequelize");
+
+
+
 
 // GET para todos los empleados
 router.get("/api/empleados", async function (req, res, next) {
-    try {
-      let data = await db.Empleados.findAll({
-        attributes: ["id_empleado", "nombre_empleado", "sexo", "fecha_nacimiento"],
-      });
-      res.json(data);
-    } catch (error) {
-      next(error); 
-    }
-  });
-
-
-// GET para empleados filtrados por ID (nombre del empleado)
-router.get('/api/empleados/:nombre', async function (req, res) {
   try {
-    const empleado = await db.Empleados.findOne({
-      where: { nombre_empleado: req.params.nombre },
+    const { nombre } = req.query;
+
+    let whereCondition = {};
+
+    if (nombre) {
+      whereCondition = {
+        nombre_empleado: {
+          [Op.like]: `%${nombre}%`,
+        },
+      };
+    }
+
+    let data = await db.Empleados.findAll({
+      where: whereCondition,
+      attributes: ["id_empleado", "nombre_empleado", "sexo", "fecha_nacimiento"],
     });
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+// GET para los proveedores filtrados por id
+router.get("/api/empleados/:id", async function (req, res) {
+  try {
+    const empleado = await db.Empleados.findByPk(req.params.id);
     if (empleado) {
       res.json(empleado);
     } else {
-      res.status(404).json({ message: 'Empleado no encontrado' });
+      res.status(404).json({ message: "Empleado no encontrado" });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Error en la consulta', error });
+    res.status(500).json({ message: "Error en la consulta", error });
   }
 });
 

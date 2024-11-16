@@ -17,13 +17,25 @@ function Inicio() {
           - Empleados
         </p>
 
-        <Link to="/productos" className="btn btn-lg btn-primary">
+        <Link to="/productos" className="btn btn-lg btn-primary" style={{backgroundColor: "violet"}}>
           <i className="fa fa-search"> </i>  Ver Productos
         </Link>
-        <h1> </h1>
-        <Link to="/proveedores" className="btn btn-lg btn-primary" style={{backgroundColor: "green"}}>
+        &emsp;
+        &emsp;
+        <Link to="/proveedores" className="btn btn-lg btn-primary" style={{backgroundColor: "violet"}}>
           <i className="fa fa-search"> </i>  Ver Proveedores
         </Link>
+        &emsp;
+        &emsp;
+        <Link to="/locales" className="btn btn-lg btn-primary" style={{backgroundColor: "violet"}}>
+          <i className="fa fa-search"> </i>  Ver Locales
+        </Link>
+        &emsp;
+        &emsp;
+        <Link to="/empleados" className="btn btn-lg btn-primary" style={{backgroundColor: "violet"}}>
+          <i className="fa fa-search"> </i>  Ver Empleados
+        </Link>
+        
       </div>
 
     );

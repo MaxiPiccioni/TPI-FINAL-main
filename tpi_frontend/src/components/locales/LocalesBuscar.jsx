@@ -1,13 +1,13 @@
 import React from "react";
 
-export default function ProductosBuscar({Nombre, setNombre, Activo, setActivo, Buscar, Agregar}) {
+export default function LocalesBuscar({Nombre, setNombre, Activo, setActivo, Buscar, Agregar}) {
 
     return (
     <form name="FormBusqueda">
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-4 col-md-4">
-            <label className="col-form-label">Nombre del producto:</label>
+            <label className="col-form-label">Nombre del Local: </label>
           </div>
           <div className="col-sm-8 col-md-7">
             <input
@@ -20,7 +20,8 @@ export default function ProductosBuscar({Nombre, setNombre, Activo, setActivo, B
             />
           </div>
         </div>
-        <hr/>
+  
+        <hr />
   
         {/* Botones */}
         <div className="row">

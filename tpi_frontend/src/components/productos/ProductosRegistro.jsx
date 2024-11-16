@@ -141,21 +141,6 @@ export default function ProductosRegistro({ AccionABMC, Item, Grabar, Volver }) 
             </div>
           </div>
 
-          {/* campo Activo */}
-          <div className="row">
-            <div className="col-sm-4 col-md-3 offset-md-1">
-              <label className="col-form-label" htmlFor="Activo">
-                Activo<span className="text-danger">*</span>:
-              </label>
-            </div>
-            <div className="col-sm-8 col-md-6">
-              <select {...register("Activo")} className="form-control" disabled>
-                <option value={null}></option>
-                <option value={false}>NO</option>
-                <option value={true}>SI</option>
-              </select>
-            </div>
-          </div>
         </fieldset>
 
         {/* Botones Grabar, Cancelar/Volver' */}

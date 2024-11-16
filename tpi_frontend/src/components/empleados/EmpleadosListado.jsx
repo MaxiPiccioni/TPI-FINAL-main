@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-export default function ProductosListado({
+export default function EmpleadosListado({
   Items,
   Consultar,
   Modificar,
@@ -17,24 +17,22 @@ export default function ProductosListado({
       <table className="table table-hover table-sm table-bordered table-striped">
         <thead>
           <tr>
-            <th className="text-center">Nombre Producto</th>
-            <th className="text-center">Precio</th>
-            <th className="text-center">Fecha de Elaboracion</th>
-            <th className="text-center">ID del proveedor</th>
+            <th className="text-center">Nombre Empleado</th>
+            <th className="text-center">Sexo</th>
+            <th className="text-center">Fecha de Nacimiento</th>
             <th className="text-center">Activo</th>
           </tr>
         </thead>
         <tbody>
           {Items &&
             Items.map((Item) => (
-              <tr key={Item.id_producto}>
-                <td>{Item.nombre_prod}</td>
-                <td className="text-end">{Item.precio}</td>
-                <td className="text-end">
-                  {moment(Item.fecha_elaboracion).format("DD/MM/YYYY")}
+              <tr key={Item.id_empleado}>
+                <td>{Item.nombre_empleado}</td>
+                <td className="text-center">{Item.sexo}</td>
+                <td className="text-center">
+                  {moment(Item.fecha_nacimiento).format("DD/MM/YYYY")}
                 </td>
-                <td>{Item.id_proveedor}</td>
-                <td>{Item.Activo ="SI"}</td>
+                <td className="text-center">{Item.Activo = "SI"}</td>
                 <td className="text-center text-nowrap">
                   <button
                     className="btn btn-sm btn-outline-primary"

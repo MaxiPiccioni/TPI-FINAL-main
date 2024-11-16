@@ -2,33 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import httpService from "../services/http.service";
 
-export default function ProveedoresRegistro({ AccionABMC, Item, Grabar, Volver }) {
+export default function LocalesRegistro({ AccionABMC, Item, Grabar, Volver }) {
   const {
     register,
     handleSubmit,
     formState: { errors, touchedFields, isValid, isSubmitted },
   } = useForm({ values: {
     ...Item,
-    fecha_registro: Item.fecha_registro.split(" ")[0]
+    fecha_apertura: Item.fecha_apertura.split(" ")[0]
   } });
   const onSubmit = (data) => {
     Grabar(data);
   };
 
-  const [proveedores, setProveedores] = useState([]);
+  const [empleados, setEmpleados] = useState([]);
 
   useEffect(() => {
-    getAllProveedores();
+    getAllEmpleados();
   }, []);
 
   // TODO: Llevar a un servicio aparte (proveedores.service.js)
-  const getAllProveedores = async () => {
+  const getAllEmpleados = async () => {
     try {
-      const response = await httpService.get("http://localhost:3000/api/proveedores", {
+      const response = await httpService.get("http://localhost:3000/api/empleados", {
         params: {},
       });
 
-      setProveedores(response.data);
+      setEmpleados(response.data);
     } catch (error) {
       console.log("error al buscar datos en el servidor!");
     }
@@ -39,69 +39,67 @@ export default function ProveedoresRegistro({ AccionABMC, Item, Grabar, Volver }
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="container-fluid">
         <fieldset disabled={AccionABMC === "C"}>
-          
-          {/* campo nombre empresa*/}
+
+          {/* campo nombre_loc */}
           <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
-              <label className="col-form-label" htmlFor="nombre_empresa">
-                Nombre Empresa<span className="text-danger">*</span>:
+              <label className="col-form-label" htmlFor="nombre_loc">
+                Nombre<span className="text-danger">*</span>:
               </label>
             </div>
             <div className="col-sm-8 col-md-6">
               <input
                 type="text"
-                {...register("nombre_empresa", {
-                  required: { value: true, message: "Nombre Empresa es requerido" },
+                {...register("nombre_loc", {
+                  required: { value: true, message: "Nombre Local es requerido" },
                   minLength: {
                     value: 4,
-                    message: "Nombre Empresa debe tener al menos 4 caracteres",
+                    message: "Nombre Local debe tener al menos 4 caracteres",
                   },
                   maxLength: {
                     value: 55,
-                    message: "Nombre Empresa debe tener como máximo 55 caracteres",
+                    message: "Nombre Local debe tener como máximo 55 caracteres",
                   },
                 })}
                 autoFocus
-                className={"form-control " + (errors?.nombre_empresa ? "is-invalid" : "")}
+                className={"form-control " + (errors?.nombre_loc ? "is-invalid" : "")}
               />
-              {errors?.nombre_empresa && touchedFields.nombre_empresa && (
-                <div className="invalid-feedback">{errors?.nombre_empresa?.message}</div>
+              {errors?.nombre_loc && touchedFields.nombre_loc && (
+                <div className="invalid-feedback">{errors?.nombre_loc?.message}</div>
               )}
             </div>
           </div>
 
-          {/* campo nombre proveedor */}
+          {/* campo Direccion */}
           <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
-              <label className="col-form-label" htmlFor="nombre_proveedor">
-                Nombre Proveedor<span className="text-danger">*</span>:
+              <label className="col-form-label" htmlFor="direccion">
+                Direccion<span className="text-danger">*</span>:
               </label>
             </div>
             <div className="col-sm-8 col-md-6">
               <input
                 type="text"
-                {...register("nombre_proveedor", {
-                  required: { value: true, message: "Nombre Proveedor es requerido" },
+                {...register("direccion", {
+                  required: { value: true, message: "Direccion es requerida" },
                   minLength: {
                     value: 4,
-                    message: "Nombre Proveedor debe tener al menos 4 caracteres",
+                    message: "Direccion debe tener al menos 4 caracteres",
                   },
                   maxLength: {
                     value: 55,
-                    message: "Nombre Proveedor debe tener como máximo 55 caracteres",
+                    message: "Direccion debe tener como máximo 55 caracteres",
                   },
                 })}
-                autoFocus
-                className={"form-control " + (errors?.nombre_proveedor ? "is-invalid" : "")}
+                className={"form-control " + (errors?.direccion ? "is-invalid" : "")}
               />
-              {errors?.nombre_proveedor && touchedFields.nombre_proveedor && (
-                <div className="invalid-feedback">{errors?.nombre_proveedor?.message}</div>
-              )}
+              <div className="invalid-feedback">{errors?.direccion?.message}</div>
             </div>
           </div>
 
-            {/* campo telefono */}
-            <div className="row">
+
+          {/* campo telefono */}
+          <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
               <label className="col-form-label" htmlFor="telefono">
                 Telefono<span className="text-danger">*</span>:
@@ -130,25 +128,49 @@ export default function ProveedoresRegistro({ AccionABMC, Item, Grabar, Volver }
             </div>
           </div>
 
-          {/* campo fecha_registro */}
+          {/* campo fecha_apertura */}
           <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
-              <label className="col-form-label" htmlFor="fecha_registro">
-                Fecha Registro<span className="text-danger">*</span>:
+              <label className="col-form-label" htmlFor="fecha_apertura">
+                Fecha Apertura<span className="text-danger">*</span>:
               </label>
             </div>
             <div className="col-sm-8 col-md-6">
               <input
                 type="date"
-                {...register("fecha_registro", {
-                  required: { value: true, message: "Fecha de Registro es requerido" },
+                {...register("fecha_apertura", {
+                  required: { value: true, message: "Fecha de Apertura es requerido" },
                 })}
-                className={"form-control " + (errors?.fecha_registro ? "is-invalid" : "")}
+                className={"form-control " + (errors?.fecha_apertura ? "is-invalid" : "")}
               />
-              <div className="invalid-feedback">{errors?.fecha_registro?.message}</div>
+              <div className="invalid-feedback">{errors?.fecha_apertura?.message}</div>
             </div>
           </div>
 
+          {/* campo id_empleado */}
+          <div className="row">
+            <div className="col-sm-4 col-md-3 offset-md-1">
+              <label className="col-form-label" htmlFor="id_empleado">
+                ID Empleado<span className="text-danger">*</span>:
+              </label>
+            </div>
+            <div className="col-sm-8 col-md-6">
+              <select
+                {...register("id_empleado", {
+                  required: { value: true, message: "ID del empleado es requerido" },
+                })}
+                className={"form-control " + (errors?.id_empleado ? "is-invalid" : "")}
+              >
+                <option value="" key={1}></option>
+                {empleados?.map((x) => (
+                  <option value={x.id_empleado} key={x.id_empleado}>
+                    {x.id_empleado}
+                  </option>
+                ))}
+              </select>
+              <div className="invalid-feedback">{errors?.id_empleado?.message}</div>
+            </div>
+          </div>
 
         </fieldset>
 
