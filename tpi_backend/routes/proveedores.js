@@ -1,38 +1,50 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../seguridad/auth");
-
-
 const db = require("../base-orm/sequelize-init");
+const { Op } = require("sequelize");
 
 // GET para todos los proveedores
 router.get("/api/proveedores", async function (req, res, next) {
     try {
-        let data = await db.Proveedores.findAll({
-            attributes: ["id_proveedor", "nombre_empresa", "nombre_proveedor", "telefono", "fecha_registro"],
-        });
-        res.json(data);
+      const { nombre } = req.query;
+  
+      let whereCondition = {};
+  
+      if (nombre) {
+        whereCondition = {
+          nombre_proveedor: {
+            [Op.like]: `%${nombre}%`,
+          },
+        };
+      }
+  
+      let data = await db.Proveedores.findAll({
+        where: whereCondition,
+        attributes: ["id_proveedor", "nombre_empresa","nombre_proveedor", "telefono", "fecha_registro"],
+      });
+      res.json(data);
     } catch (error) {
-        next(error); 
+      next(error);
     }
-});
+  });
 
-// GET para proveedores filtrados por nombre del proveedor
-router.get('/api/proveedores/:nombre', async function (req, res) {
+
+// GET para los proveedores filtrados por id
+router.get("/api/proveedores/:id", async function (req, res) {
     try {
-        const proveedor = await db.Proveedores.findOne({
-            where: { nombre_proveedor: req.params.nombre },
-        });
-        if (proveedor) {
-            res.json(proveedor);
-        } else {
-            res.status(404).json({ message: 'Proveedor no encontrado' });
-        }
+      const proveedor = await db.Proveedores.findByPk(req.params.id);
+      if (proveedor) {
+        res.json(proveedor);
+      } else {
+        res.status(404).json({ message: "Proovedor no encontrado" });
+      }
     } catch (error) {
-        res.status(500).json({ message: 'Error en la consulta', error });
+      res.status(500).json({ message: "Error en la consulta", error });
     }
-});
+  });
 
+  
 // POST para crear un nuevo proveedor
 router.post('/api/proveedores/', async (req, res) => {
     const { nombre_empresa, nombre_proveedor, telefono, fecha_registro } = req.body;

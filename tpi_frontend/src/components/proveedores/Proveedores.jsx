@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import { productosService } from "../services/productos.service";
 import modalDialogService from "../services/modalDialog.service";
-import ProductosBuscar from "./ProductosBuscar";
-import ProductosListado from "./ProductosListado";
-import ProductosRegistro from "./ProductosRegistro";
+import ProveedoresBuscar from "./ProveedoresBuscar";
+import ProveedoresListado from "./ProveedoresListado";
+import ProveedoresRegistro from "./ProveedoresRegistro";
+import { proveedoresService } from "../services/proveedores.service";
 
-function Productos() {
+function Proveedores() {
   const TituloAccionABMC = {
     A: "(Agregar)",
     B: "(Eliminar)",
@@ -36,7 +36,7 @@ function Productos() {
       _pagina = Pagina;
     }
     modalDialogService.BloquearPantalla(true);
-    const data = await productosService.Buscar(Nombre, null, _pagina);
+    const data = await proveedoresService.Buscar(Nombre, null, _pagina);
 
     modalDialogService.BloquearPantalla(false);
 
@@ -51,32 +51,32 @@ function Productos() {
   }
 
   async function BuscarPorId(item, accionABMC) {
-    const data = await productosService.BuscarPorId(item);
+    const data = await proveedoresService.BuscarPorId(item);
     setItem(data);
     setAccionABMC(accionABMC);
   }
 
-  function Consultar(producto) {
-    BuscarPorId(producto, "C"); // paso la accionABMC pq es asincrono la busqueda y luego de ejecutarse quiero cambiar el estado accionABMC
+  function Consultar(proveedor) {
+    BuscarPorId(proveedor, "C"); // paso la accionABMC pq es asincrono la busqueda y luego de ejecutarse quiero cambiar el estado accionABMC
   }
-  function Modificar(producto) {
-    if (!producto.activo) {
+  function Modificar(proveedor) {
+    if (!proveedor.activo) {
       //alert("No puede modificarse un registro Inactivo.");
       modalDialogService.Alert("No puede modificarse un registro Inactivo.");
       return;
     }
-    BuscarPorId(producto, "M"); // paso la accionABMC pq es asincrono la busqueda y luego de ejecutarse quiero cambiar el estado accionABMC
+    BuscarPorId(proveedor, "M"); // paso la accionABMC pq es asincrono la busqueda y luego de ejecutarse quiero cambiar el estado accionABMC
   }
 
   async function Agregar() {
     setAccionABMC("A");
     setItem({
-      id_producto: 0,
-      nombre_prod: "",
-      precio: "",
-      fecha_elaboracion: moment(new Date()).format("YYYY-MM-DD"),
-      id_proveedor: "",
-      Activo: true,
+        id_proveedor: 0,
+        nombre_empresa: "",
+        nombre_proveedor: "",
+        telefono: "",
+        fecha_registro: moment().format("YYYY-MM-DD"),
+        
     });
     alert("preparando el Alta...");
   }
@@ -88,7 +88,7 @@ function Productos() {
       undefined,
       undefined,
       async () => {
-        await productosService.ActivarDesactivar(item);
+        await proveedoresService.ActivarDesactivar(item);
         await Buscar();
       }
     );
@@ -97,7 +97,7 @@ function Productos() {
   async function Grabar(item) {
     // agregar o modificar
     try {
-      await productosService.Grabar(item);
+      await proveedoresService.Grabar(item);
     } catch (error) {
       alert(error?.response?.data?.message ?? error.toString());
       return;
@@ -119,11 +119,11 @@ function Productos() {
     <div>
       <div className="container">
         <div className="tituloPagina">
-          Productos <small>{TituloAccionABMC[AccionABMC]}</small>
+          Proveedores <small>{TituloAccionABMC[AccionABMC]}</small>
         </div>
 
         {AccionABMC === "L" && (
-          <ProductosBuscar
+          <ProveedoresBuscar
             Nombre={Nombre}
             setNombre={setNombre}
             Activo={Activo}
@@ -133,7 +133,7 @@ function Productos() {
           />
         )}
         {AccionABMC === "L" && Items?.length > 0 && (
-          <ProductosListado
+          <ProveedoresListado
             Items={Items}
             Consultar={Consultar}
             Modificar={Modificar}
@@ -153,10 +153,10 @@ function Productos() {
 
         {/* Formulario de alta/modificacion/consulta */}
         {(AccionABMC === "A" || AccionABMC === "M") && (
-          <ProductosRegistro {...{ AccionABMC, Item, Grabar, Volver }} />
+          <ProveedoresRegistro {...{ AccionABMC, Item, Grabar, Volver }} />
         )}
       </div>
     </div>
   );
 }
-export { Productos };
+export { Proveedores };

@@ -3,19 +3,26 @@ import { Link } from "react-router-dom";
 
 function Inicio() {
     return (
-      <div className="mt-4 p-5 rounded" style={{ backgroundColor: "lightgray" }}>
+      <div className="mt-4 p-5 rounded" style={{ backgroundColor: "pink" }}>
         <h1>El Rincón de lo Dulce</h1>
-        <p>Este ejemplo está desarrollado con las siguientes tecnologías:</p>
+        <p>Esta página está diseñada para la gestión de productos de un comercio de venta de productos dulces.</p>
         <p>
-          Backend: NodeJs, Express , WebApiRest, Swagger, Sequelize, Sqlite
-          múltiples capas en Javascript.
+          Los ítems para los empleados son:
+          - Productos 
+          - Locales 
         </p>
         <p>
-          Frontend: Single Page Application, HTML, CSS, Bootstrap, Javascript, NodeJs y React.
+          Los ítems para los administradores son:
+          - Proveedores 
+          - Empleados
         </p>
 
         <Link to="/productos" className="btn btn-lg btn-primary">
           <i className="fa fa-search"> </i>  Ver Productos
+        </Link>
+        <h1> </h1>
+        <Link to="/proveedores" className="btn btn-lg btn-primary" style={{backgroundColor: "green"}}>
+          <i className="fa fa-search"> </i>  Ver Proveedores
         </Link>
       </div>
 

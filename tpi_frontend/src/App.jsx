@@ -4,12 +4,11 @@ import { Inicio } from "./components/Inicio";
 import {Menu} from "./components/Menu";
 import { Footer } from "./components/Footer";
 import  ModalDialog  from "./components/ModalDialog";
-
 import { Productos } from "./components/productos/Productos";
 import { ProductosJWT } from "./components/productosJWT/ProductosJWT";
 import RequireAuth from "./components/RequiereAuth" ;
 import  Login  from "./login/Login";
-
+import { Proveedores } from "./components/proveedores/Proveedores";
 
 export default function App() {
   return (
@@ -22,14 +21,9 @@ export default function App() {
               <Route path="/inicio" element={<Inicio />} />
               <Route path="*" element={<Navigate to="/Inicio" replace />} />
               <Route path="/productos" element={<Productos/>} />
-              <Route
-            path="/productosjwt"
-            element={
-              <RequireAuth>
-                <ProductosJWT />
-              </RequireAuth>
-            }
-          />
+              <Route path="/productosjwt" element={
+              <RequireAuth> <ProductosJWT /> </RequireAuth>}/>
+              <Route path="/proveedores" element={<Proveedores/>} />
           <Route path="/login/:componentFrom" element={<Login />} />
           <Route path="*" element={<Navigate to="/inicio" replace />} />
         </Routes>

@@ -27,7 +27,7 @@ router.get("/api/productos", async function (req, res, next) {
   } catch (error) {
     next(error);
   }
-});
+})
 
 // GET para los productos filtrados por id
 router.get("/api/productos/:id", async function (req, res) {
